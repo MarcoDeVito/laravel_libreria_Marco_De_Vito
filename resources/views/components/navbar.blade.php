@@ -10,7 +10,7 @@
         <li><a href="{{route('homepage')}}" class="nav-link px-2 @if (request()->routeIs('homepage'))  link-secondary @endif">Home</a></li>
         <li><a href="{{route('books.index')}}" class="nav-link px-2  @if (request()->routeIs('books.index'))  link-secondary @endif">Prodotti</a></li>
         <li><a href="{{route('authors.index')}}" class="nav-link px-2  @if (request()->routeIs('authors.index'))  link-secondary @endif">Autori</a></li>
-        <li><a href="#" class="nav-link px-2  @if (request()->routeIs('Contact'))  link-secondary @endif">Contatti</a></li>
+        <li><a href="{{route('contact')}}" class="nav-link px-2  @if (request()->routeIs('contact'))  link-secondary @endif">Contatti</a></li>
     </ul>
     @guest
     <div class="col-md-3 text-end me-3">
