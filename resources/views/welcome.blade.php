@@ -35,7 +35,8 @@
             </div>
         </div>
     @else
-        Nulla
+        <h2>Benvenuto Ospite</h2>
+        <p>Accedi per vedere tutte le funzionalità</p>
     @endauth
 
 </x-main>

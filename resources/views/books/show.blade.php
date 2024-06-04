@@ -10,9 +10,8 @@
 
             </div>
 
-            <img class="img-fluid" style="width:12%"
-                                    src="{{ $book->image ? Storage::url($book->image) : '/book.png' }}"
-                                    alt="Copertina libro" />
+            <img class="img-fluid" style="width:12%" src="{{ $book->image ? Storage::url($book->image) : '/book.png' }}"
+                alt="Copertina libro" />
             <div>
                 <ul>
                     <li>
@@ -22,10 +21,16 @@
                         <p>Anno libro: {{ $book->years ?? 'Ignoto' }}</p>
                     </li>
                     <li>
-                        <p>Autore: {{ $book->author->name.' '. $book->author->surname  ?? 'Ignoto' }}</p>
+                        <p>Autore: {{ $book->author->name . ' ' . $book->author->surname ?? 'Ignoto' }}</p>
                     </li>
-                   
-                    
+                    <li>                        @forelse ($book->categories as $category)
+                            @if ($loop->first)<span>Categoria: </span>@endif{{ $category->name }}@if(!$loop->last){{$string=','}}@endif
+                        @empty Nessuna categoria
+                        @endforelse
+                    </li>
+
+
+
                 </ul>
             </div>
         </div>

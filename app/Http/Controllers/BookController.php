@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
+use App\Models\Category;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -31,8 +32,9 @@ class BookController extends Controller
      */
     public function create()
     {
+        $categories=Category::all();
         $authors=Author::all();
-        return view('books.create',compact('authors'));
+        return view('books.create',compact('authors','categories'));
     }
 
     /**
@@ -47,13 +49,16 @@ class BookController extends Controller
             $file_name = $request->file('image')->getClientOriginalName();
             $path_image = $request->file('image')->storeAs('public/images', $file_name);
         }
-        Book::create([
+        $book= Book::create([
             'title'=> $request->title,
             'years'=> $request->years,
             'pages'=> $request->pages,
             'author_id'=>$request->author_id,
             'image'=>$path_image,
+
         ]);
+
+        $book->categories()->attach($request->categories);
         return redirect()->route('books.index')->with('success', 'Creazione Libro avvenuta con successo!');
     }
 
@@ -71,7 +76,9 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('books.edit',compact('book'));
+        $categories=Category::all();
+        
+        return view('books.edit',compact('book','categories'));
     }
 
     /**
@@ -90,6 +97,10 @@ class BookController extends Controller
             'pages'=> $request->pages,
             'image'=>$path_image
         ]);
+        $book->categories()->detach();
+        $book->categories()->attach($request->categories);
+        //  $book->categories()->sync($request->categories);
+
         return redirect()->route('books.index')->with('success', 'Modifica Libro avvenuta con successo!');
     }
 
@@ -98,6 +109,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        $book->categories()->detach();
         $book->delete();
         return redirect()->route('books.index')->with('success', 'Cancellazione Libro avvenuta con successo!');
     }

@@ -37,12 +37,22 @@
                         <label for="author_id">Autore</label>
                         <select name="author_id" id="author_id" class="form-control">
                             @forelse ($authors as $author)
-                                <option value="{{ $author->id }}">{{ $author->name . ' ' . $author->surname }}</option>
+                                <option value="{{ $author->id }}">{{ $author->name . ' ' . $author->surname }}
+                                </option>
                             @empty
                             @endforelse
 
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <div class="form-control">
+                            @foreach ($categories as $category)
+                                <input type="checkbox" id="category" name="categories[]" value="{{ $category->id }}">
+                                <label for="category">{{ $category->name }}</label>
+                            @endforeach
+                        </div>
+                    </div>
+
                     <div class="form-floating mb-3">
                         <input class="form-control" id="image" name="image" value type="file">
                     </div>
